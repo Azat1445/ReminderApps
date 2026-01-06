@@ -1,0 +1,60 @@
+server:
+  port: 8081
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - openid
+              - email
+              - profile
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-name-attribute: sub
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db_reminder
+    username:
+    password:
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.jdbc.time_zone: UTC
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: reminderapprepo@gmail.com
+    password: lats hkzy fqau oway
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+telegram:
+  bot:
+    name: YourReminderApp
+    token: 7953176433:AAHTneURholnXzk0LGsZPtKWabhNFQyPYB8
+
+
+jwt:
+  secret: thisIsAVeryLongSecretKeyThatIsDefinitelyMoreThanSixtyFourBytesLongToSatisfyHsFiveTwelveSecurityRequirementsAndItShouldWorkNowForSure1234567890
+  expiration: 86400000
